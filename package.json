@@ -1,6 +1,7 @@
 {
   "name": "open-vscode-settings",
   "displayName": "Open VSCode Settings",
+  "publisher": "sh0o0",
   "description": "Open vscode settings files from other IDE.",
   "version": "0.0.1",
   "engines": {
