@@ -9,6 +9,6 @@ You can use this features from command palette.
 Open settings.json of VSCode
 <img src="images/settings.png" >
 
-Open keybind.json of VSCode
-<img src="images/keybind.png" >
+Open keybindings.json of VSCode
+<img src="images/keybindings.png" >
 
