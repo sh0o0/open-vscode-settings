@@ -14,8 +14,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "open-vscode-settings.helloWorld",
-        "title": "Hello World"
+        "command": "open-vscode-settings.openSettingsJson",
+        "title": "Open VSCode Settings JSON"
+      },
+      {
+        "command": "open-vscode-settings.openKeybindingsJson",
+        "title": "Open VSCode Keybindings JSON"
       }
     ]
   },

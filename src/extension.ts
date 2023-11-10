@@ -1,26 +1,63 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+import { homedir, platform } from 'os';
 import * as vscode from 'vscode';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+const mac = 'darwin';
+const win = 'win32';
+const linux = 'linux';
+const winSettingDirPath = '/Code/User/';
+const macSettingDirPath = '/Library/Application Support/Code/User/';
+const linuxSettingDirPath = '/.config/Code/User/';
+
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "open-vscode-settings" is now active!');
+	console.log('extension "open-vscode-settings" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('open-vscode-settings.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Open VSCode Settings!');
+	let openSettingsJson = vscode.commands.registerCommand('open-vscode-settings.openSettingsJson', () => {
+		let filePath = '';
+		switch (platform()) {
+			case win:
+				filePath = process.env.APPDATA + winSettingDirPath + 'settings.json';
+				break;
+			case mac:
+				filePath = homedir() + macSettingDirPath + 'settings.json';
+				break;
+			case linux:
+				filePath = homedir() + linuxSettingDirPath + 'settings.json';
+				break;
+			default:
+				vscode.window.showErrorMessage('Your platform is not currently supported');
+				return;
+		}
+		const openPath = vscode.Uri.file(filePath);
+		vscode.workspace.openTextDocument(openPath).then(doc => {
+			vscode.window.showTextDocument(doc);
+		});
 	});
 
-	context.subscriptions.push(disposable);
+	let openKeybindingsJson = vscode.commands.registerCommand('open-vscode-settings.openKeybindingsJson', () => {
+		let filePath = '';
+		switch (platform()) {
+			case win:
+				filePath = process.env.APPDATA + winSettingDirPath + 'keybindings.json';
+				break;
+			case mac:
+				filePath = homedir() + macSettingDirPath + 'keybindings.json';
+				break;
+			case linux:
+				filePath = homedir() + linuxSettingDirPath + 'keybindings.json';
+				break;
+			default:
+				vscode.window.showErrorMessage('Your platform is not currently supported');
+				return;
+		}
+		const openPath = vscode.Uri.file(filePath);
+		vscode.workspace.openTextDocument(openPath).then(doc => {
+			vscode.window.showTextDocument(doc);
+		});
+	});
+
+	context.subscriptions.push(openSettingsJson);
+	context.subscriptions.push(openKeybindingsJson);
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
